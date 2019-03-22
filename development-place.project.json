@@ -1,0 +1,33 @@
+{
+  "name": "RECS",
+  "tree": {
+    "$className": "DataModel",
+    "HttpService": {
+      "$className": "HttpService",
+      "$properties": {
+        "HttpEnabled": {
+          "Type": "Bool",
+          "Value": true
+        }
+      }
+    },
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "$path": "src/common/",
+      "RECS": {
+        "$path": "module/recs/src"
+      }
+    },
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "$path": "src/server/"
+    },
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "StarterPlayerScripts": {
+        "$className": "StarterPlayerScripts",
+        "$path": "src/client/"
+      }
+    }
+  }
+}

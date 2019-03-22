@@ -1,0 +1,3 @@
+[submodule "module/recs"]
+	path = module/recs
+	url = https://github.com/AmaranthineCodices/recs.git
