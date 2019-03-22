@@ -13,9 +13,14 @@
     },
     "ReplicatedStorage": {
       "$className": "ReplicatedStorage",
-      "$path": "src/common/",
-      "RECS": {
-        "$path": "module/recs/src"
+      "common": {
+        "$path": "src/common/"
+      },
+      "lib": {
+        "$className": "Folder",
+        "RECS": {
+          "$path": "module/recs/src"
+        }
       }
     },
     "ServerScriptService": {
