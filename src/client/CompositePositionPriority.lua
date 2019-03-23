@@ -1,0 +1,6 @@
+return {
+    FIRST = 0,
+    MOVING_PLATFORMS = 100,
+    SPINNING_PLATFORMS = 200,
+    LAST = 2000,
+}
