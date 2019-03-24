@@ -26,7 +26,7 @@ function SpinnerSystem:init()
             end)
 end
 
-function SpinnerSystem:step(dt)
+function SpinnerSystem:step()
     for instance, spinner in self.core:components(Components.Spinner) do
         -- dont worry about coins that aren't loaded
         if instance:IsDescendantOf(game:GetService("Workspace")) then
