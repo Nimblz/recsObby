@@ -17,11 +17,12 @@ local CoinTriggerSystem = RECS.System:extend("CoinTriggerSystem")
 function CoinTriggerSystem:coinTouched(coinTrigger, instance, hit)
     if hitIsYou(hit) then
         local localPlayer = Players.LocalPlayer
+        local stats = self.core:getComponent(localPlayer, Components.PlayerStats)
+
         Sound:playSound(Sound.sounds.COIN_COLLECT,instance.CFrame)
         instance:Destroy()
-        local stats = self.core:getComponent(localPlayer, Components.PlayerStats)
+
         stats.score = stats.score + coinTrigger.value
-        print(stats.score)
     end
 end
 
