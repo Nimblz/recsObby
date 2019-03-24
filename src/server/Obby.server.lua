@@ -37,3 +37,5 @@ e_RequestCharacterLoad.OnServerEvent:connect(function(player, position)
 
     rootPart.CFrame = CFrame.new(position)
 end)
+
+print("Server ready.")
