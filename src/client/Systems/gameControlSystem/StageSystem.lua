@@ -12,7 +12,6 @@ local client = game:GetService("StarterPlayer"):WaitForChild("StarterPlayerScrip
 
 local Signal = require(lib:WaitForChild("Signal"))
 local RECS = require(lib:WaitForChild("RECS"))
-local Sound = require(client:WaitForChild("Sound"))
 local Components = require(common:WaitForChild("Components"))
 
 local hitIsYou = require(client:WaitForChild("hitIsYou"))
@@ -25,8 +24,9 @@ local e_RequestCharacterLoad = remote:WaitForChild("RequestCharacterLoad")
 function StageSystem:newStage(stage, stageinstance)
 
     stage.stageCompleted = Signal.new()
-
+    stage.characterDied = nil
     stage.characterAdded = localPlayer.CharacterAdded:connect(function(character)
+        print("added character")
         local humanoid = character:WaitForChild("Humanoid")
         local root = character:WaitForChild("HumanoidRootPart")
 
@@ -35,7 +35,7 @@ function StageSystem:newStage(stage, stageinstance)
         CollectionService:AddTag(root,"ForceReciever")
 
         -- oh noes, respawn the character!
-        humanoid.Died:connect(function()
+        stage.characterDied = humanoid.Died:connect(function()
             self:characterDied(stage)
         end)
     end)
@@ -56,11 +56,13 @@ function StageSystem:newStage(stage, stageinstance)
     for goalinstance, goal in self.core:components(Components.Goal) do
         if goalinstance:IsDescendantOf(stageinstance) then
             table.insert(stage.goals,goal)
-
-            goalinstance.Touched:connect(function(hit)
+            local goalConnection
+            goalConnection = goalinstance.Touched:connect(function(hit)
                 if hitIsYou(hit) then
-                    stage.characterAdded:disconnect()
-                    Sound:playGlobalSound(Sound.sounds.VICTORY)
+                    localPlayer.Character.Parent = nil
+                    goalConnection:Disconnect()
+                    stage.characterDied:Disconnect()
+                    stage.characterAdded:Disconnect()
                     stage.stageCompleted:fire()
                 end
             end)
@@ -76,18 +78,14 @@ function StageSystem:loadCharacter(stage)
     local startInstance = startToUse.instance
     local spawnPos = (startInstance.CFrame * CFrame.new(0,6,0)).p
 
-    if localPlayer.Character and localPlayer.Character.PrimaryPart then
-        localPlayer.Character.PrimaryPart.CFrame = CFrame.new(spawnPos)
-    else
-        e_RequestCharacterLoad:FireServer(spawnPos)
-    end
+    e_RequestCharacterLoad:FireServer(spawnPos)
 end
 
 function StageSystem:characterDied(stage)
     -- fire some event
 
-    wait(0.5)
-
+    wait(2/3)
+    print("loading")
     StageSystem:loadCharacter(stage)
 end
 
@@ -98,6 +96,7 @@ function StageSystem:init()
 
     self.maid.componentAdded =
         self.core:getComponentAddedSignal(Components.Stage):Connect(function(stage, stageinstance)
+            print(("Stage [%s] created"):format(stageinstance:GetFullName()))
             self:newStage(stage, stageinstance)
         end)
 

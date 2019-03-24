@@ -9,6 +9,7 @@ local lib = ReplicatedStorage:WaitForChild("lib")
 local common = ReplicatedStorage:WaitForChild("common")
 
 local RECS = require(lib:WaitForChild("RECS"))
+local Sound = require(client:WaitForChild("Sound"))
 local Components = require(common:WaitForChild("Components"))
 local Stages = require(client:WaitForChild("Stages"))
 
@@ -16,8 +17,6 @@ local ObbySystem = RECS.System:extend("ObbySystem")
 
 function ObbySystem:loadStage(obby,stageId)
     assert(Stages[stageId], "invalid stage: "..tostring(stageId))
-
-    self:unloadStage(obby)
 
     local loadingStage = Stages[stageId]:clone()
 
@@ -27,23 +26,6 @@ function ObbySystem:loadStage(obby,stageId)
     obby.activeStageId = stageId
 
     CollectionService:AddTag(loadingStage, "Stage")
-    local stage = self.core:getComponent(loadingStage,Components.Stage)
-    if stage then
-        stage.stageCompleted:connect(function()
-            self:nextStage(obby)
-        end)
-    else
-        local stageAdded
-        stageAdded = self.core:getComponentAddedSignal(Components.Stage):Connect(
-            function(stage,instance)
-                stageAdded:Disconnect()
-                stage.stageCompleted:connect(function()
-                    self:nextStage(obby)
-                end)
-            end
-        )
-    end
-
 end
 
 function ObbySystem:nextStage(obby)
@@ -67,9 +49,23 @@ function ObbySystem:init()
     self.maid.componentAdded =
     self.core:getComponentAddedSignal(Components.Obby):Connect(
         function(obby, instance)
+
+            self.core:getComponentAddedSignal(Components.Stage):Connect(
+                function(stage,instance)
+                    local onCompleteConnection
+                    onCompleteConnection = stage.stageCompleted:connect(function()
+                        onCompleteConnection:Disconnect()
+                        Sound:playGlobalSound(Sound.sounds.VICTORY)
+                        self:nextStage(obby)
+                    end)
+                end
+            )
+
             self:loadStage(obby,1)
             print(("Obby [%s] loaded."):format(instance:GetFullName()))
         end)
+
+
 end
 
 function ObbySystem:step()
