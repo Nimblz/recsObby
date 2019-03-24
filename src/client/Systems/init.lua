@@ -9,13 +9,22 @@ local RECS = require(lib:WaitForChild("RECS"))
 -- services will be registered in the order given
 
 local serviceDeffinitions = {
-    PlayerStatsSystem = require(gameControlSystem:WaitForChild("PlayerStatsSystem")),
-    --ObbySystem = require(gameControlSystem:WaitForChild("ObbySystem")),
-    --StageSystem = require(gameControlSystem:WaitForChild("StageSystem")),
+    ObbySystem = require(gameControlSystem:WaitForChild("ObbySystem")),
+    StageSystem = require(gameControlSystem:WaitForChild("StageSystem")),
 
+    PlayerHitboxSystem = require(gameControlSystem:WaitForChild("PlayerHitboxSystem")),
+
+    DamageTriggerSystem = require(gameControlSystem:WaitForChild("DamageTriggerSystem")),
     CoinTriggerSystem = require(stageObjectSystem:WaitForChild("CoinTriggerSystem")),
+    ForceSystem = require(gameControlSystem:WaitForChild("ForceSystem")),
+    FanSystem = require(gameControlSystem:WaitForChild("FanSystem")),
+    ConveyorSystem = require(gameControlSystem:WaitForChild("ConveyorSystem")),
+    TrampolineSystem = require(stageObjectSystem:WaitForChild("TrampolineSystem")),
     CompositePositionSystem = require(stageObjectSystem:WaitForChild("CompositePositionSystem")),
+    MovingPlatformSystem = require(gameControlSystem:WaitForChild("MovingPlatformSystem")),
     SpinnerSystem = require(stageObjectSystem:WaitForChild("SpinnerSystem")),
+
+    PlayerStatsSystem = require(gameControlSystem:WaitForChild("PlayerStatsSystem")),
 }
 
 -- registration
@@ -27,5 +36,8 @@ return {
     RECS.interval(1, {
         serviceDeffinitions.PlayerStatsSystem,
         serviceDeffinitions.CoinTriggerSystem,
+        serviceDeffinitions.TrampolineSystem,
+        serviceDeffinitions.ObbySystem,
+        serviceDeffinitions.StageSystem,
     })
 }

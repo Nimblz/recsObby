@@ -7,7 +7,7 @@ local RECS = require(lib:WaitForChild("RECS"))
 
 return RECS.defineComponent("MovingPlatform", function()
     return {
-        platformPart = nil,
+        platformPart = 0,
         path = {}, -- array of points that this platform moves between
         reverses = true, -- reverses when it reaches the end, rather than tweening to the first point
         timeToCycle = 5, -- time to reach the end of points

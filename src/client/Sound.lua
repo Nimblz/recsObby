@@ -22,15 +22,35 @@ Sound.sounds = {
         volume = 0.5,
         group = Sound.soundGroups.EFFECT
     },
+    TRAMPOLINE_BOING = {
+        id = "rbxassetid://12222124",
+        volume = 0.75,
+        group = Sound.soundGroups.EFFECT
+    },
+    VICTORY = {
+        id = "rbxassetid://12222253",
+        volume = 0.5,
+        group = Sound.soundGroups.EFFECT
+    },
 }
 
 Sound.soundBin = Instance.new("Folder")
 Sound.soundBin.Name = "soundBin"
 Sound.soundBin.Parent = game:GetService("Workspace")
 
+local function createSound(deffinition)
+    local newSound = Instance.new("Sound")
+
+    newSound.SoundId = deffinition.id or ""
+    newSound.Volume = deffinition.volume
+    newSound.SoundGroup = deffinition.group
+
+    return newSound
+end
+
 function Sound:playSound(deffinition,cframe)
     local soundPart = Instance.new("Part")
-    local newSound = Instance.new("Sound")
+    local newSound = createSound(deffinition)
 
     soundPart.Size = Vector3.new(1,1,1)
     soundPart.Transparency = 1
@@ -40,15 +60,25 @@ function Sound:playSound(deffinition,cframe)
 
     soundPart.Parent = Sound.soundBin
 
-    newSound.SoundId = deffinition.id or ""
-    newSound.Volume = deffinition.volume
-    newSound.SoundGroup = deffinition.group
-
     newSound.Parent = soundPart
 
     newSound.Ended:connect(function()
         newSound:Destroy()
         soundPart:Destroy()
+    end)
+
+    newSound:Play()
+
+    return newSound
+end
+
+function Sound:playGlobalSound(deffinition)
+    local newSound = createSound(deffinition)
+
+    newSound.Parent = Sound.soundBin
+
+    newSound.Ended:connect(function()
+        newSound:Destroy()
     end)
 
     newSound:Play()

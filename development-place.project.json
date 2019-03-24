@@ -20,6 +20,9 @@
         "$className": "Folder",
         "RECS": {
           "$path": "module/recs/src"
+        },
+        "Signal": {
+          "$path": "module/signal/lib"
         }
       }
     },

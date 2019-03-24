@@ -24,7 +24,6 @@ function CompositePositionSystem:init()
 end
 
 function CompositePositionSystem:step()
-    print("stepping composite positions")
     for instance, compositePos in self.core:components(Components.CompositePosition) do
         -- dont worry about entities that aren't visible
         if instance:IsDescendantOf(game:GetService("Workspace")) then
@@ -33,7 +32,6 @@ function CompositePositionSystem:step()
 
             for _,cfStruct in pairs(compositePos.cframes) do
                 table.insert(sortedCFrames,cfStruct) -- insert to a array we can sort
-                print(cfStruct.cframe)
             end
 
             table.sort(sortedCFrames, function(a,b) return a.priority < b.priority end)
@@ -41,8 +39,6 @@ function CompositePositionSystem:step()
             for _,cfStruct in ipairs(sortedCFrames) do
                 cframeAccumulator = cframeAccumulator * cfStruct.cframe
             end
-
-            print(instance:GetFullName())
 
             instance.CFrame = compositePos.originalCFrame * cframeAccumulator
         end

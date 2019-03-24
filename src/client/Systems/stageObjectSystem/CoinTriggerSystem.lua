@@ -10,11 +10,9 @@ local RECS = require(lib:WaitForChild("RECS"))
 local Sound = require(client:WaitForChild("Sound"))
 local Components = require(common:WaitForChild("Components"))
 
-local CoinTriggerSystem = RECS.System:extend("CoinTriggerSystem")
+local hitIsYou = require(client:WaitForChild("hitIsYou"))
 
-local function hitIsYou(hit)
-    return Players:GetPlayerFromCharacter(hit.Parent) == Players.LocalPlayer
-end
+local CoinTriggerSystem = RECS.System:extend("CoinTriggerSystem")
 
 function CoinTriggerSystem:coinTouched(coinTrigger, instance, hit)
     if hitIsYou(hit) then

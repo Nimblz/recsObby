@@ -7,7 +7,7 @@ local RECS = require(lib:WaitForChild("RECS"))
 
 return RECS.defineComponent("Obby", function()
     return {
-        activeStageIndex = 0,
+        activeStageIndex = nil,
         activeStageInstance = nil,
         activeStageComponent = nil,
     }
