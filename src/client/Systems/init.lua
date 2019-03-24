@@ -12,16 +12,16 @@ local serviceDeffinitions = {
     ObbySystem = require(gameControlSystem:WaitForChild("ObbySystem")),
     StageSystem = require(gameControlSystem:WaitForChild("StageSystem")),
 
-    PlayerHitboxSystem = require(gameControlSystem:WaitForChild("PlayerHitboxSystem")),
+    PlayerHitboxSystem = require(stageObjectSystem:WaitForChild("PlayerHitboxSystem")),
 
-    DamageTriggerSystem = require(gameControlSystem:WaitForChild("DamageTriggerSystem")),
+    DamageTriggerSystem = require(stageObjectSystem:WaitForChild("DamageTriggerSystem")),
     CoinTriggerSystem = require(stageObjectSystem:WaitForChild("CoinTriggerSystem")),
-    ForceSystem = require(gameControlSystem:WaitForChild("ForceSystem")),
-    FanSystem = require(gameControlSystem:WaitForChild("FanSystem")),
-    ConveyorSystem = require(gameControlSystem:WaitForChild("ConveyorSystem")),
+    ForceSystem = require(stageObjectSystem:WaitForChild("ForceSystem")),
+    FanSystem = require(stageObjectSystem:WaitForChild("FanSystem")),
+    ConveyorSystem = require(stageObjectSystem:WaitForChild("ConveyorSystem")),
     TrampolineSystem = require(stageObjectSystem:WaitForChild("TrampolineSystem")),
     CompositePositionSystem = require(stageObjectSystem:WaitForChild("CompositePositionSystem")),
-    MovingPlatformSystem = require(gameControlSystem:WaitForChild("MovingPlatformSystem")),
+    MovingPlatformSystem = require(stageObjectSystem:WaitForChild("MovingPlatformSystem")),
     SpinnerSystem = require(stageObjectSystem:WaitForChild("SpinnerSystem")),
 
     PlayerStatsSystem = require(gameControlSystem:WaitForChild("PlayerStatsSystem")),
