@@ -36,6 +36,7 @@ return {
     RECS.interval(1, {
         serviceDeffinitions.PlayerStatsSystem,
         serviceDeffinitions.CoinTriggerSystem,
+        serviceDeffinitions.DamageTriggerSystem,
         serviceDeffinitions.TrampolineSystem,
         serviceDeffinitions.ObbySystem,
         serviceDeffinitions.StageSystem,
