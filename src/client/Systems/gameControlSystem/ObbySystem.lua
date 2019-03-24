@@ -61,7 +61,7 @@ function ObbySystem:init()
                 end
             )
 
-            self:loadStage(obby,1)
+            self:loadStage(obby,obby.startingStageIndex)
             print(("Obby [%s] loaded."):format(instance:GetFullName()))
         end)
 
