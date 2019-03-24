@@ -26,7 +26,7 @@ function SpinnerSystem:init()
             end)
 end
 
-function SpinnerSystem:step()
+function SpinnerSystem:step(dt)
     for instance, spinner in self.core:components(Components.Spinner) do
         -- dont worry about coins that aren't loaded
         if instance:IsDescendantOf(game:GetService("Workspace")) then
@@ -42,6 +42,8 @@ function SpinnerSystem:step()
                     priority = CompositePositionPriority.SPINNING_PLATFORMS
                 }
             end
+
+            instance.RotVelocity = spinner.rotAxis * spinner.revsPerSec * 2
         end
     end
 end
