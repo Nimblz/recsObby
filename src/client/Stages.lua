@@ -4,12 +4,14 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local stage = ReplicatedStorage:WaitForChild("stage")
 
-local numStages = #stage:GetChildren()
+local numStages = #stage:GetChildren() - 1
 
 local stageInstances = {}
 
 for i = 1, numStages do
     table.insert(stageInstances,stage:WaitForChild("Stage"..i))
 end
+
+table.insert(stageInstances, stage:WaitForChild("StageEnd"))
 
 return stageInstances
