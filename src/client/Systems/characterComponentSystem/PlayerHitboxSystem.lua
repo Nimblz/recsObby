@@ -20,7 +20,7 @@ end
 
 function PlayerHitboxSystem:step()
     for instance, hitbox in self.core:components(Components.PlayerHitbox) do
-        -- hooh
+        -- Todo: Hitbox
     end
 end
 

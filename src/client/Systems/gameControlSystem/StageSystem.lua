@@ -32,6 +32,7 @@ function StageSystem:newStage(stage, stageinstance)
 
         -- attach the relavant character components
         CollectionService:AddTag(character,"PlayerHitbox")
+        CollectionService:AddTag(character,"CastShadow")
         CollectionService:AddTag(root,"ForceReciever")
 
         -- oh noes, respawn the character!
