@@ -35,6 +35,7 @@ return {
         serviceDeffinitions.SpinnerSystem,
         serviceDeffinitions.CompositePositionSystem,
         serviceDeffinitions.CastShadowSystem,
+        serviceDeffinitions.PlayerHitboxSystem,
     }),
     RECS.interval(1, {
         serviceDeffinitions.PlayerStatsSystem,
