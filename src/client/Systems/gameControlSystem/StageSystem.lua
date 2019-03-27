@@ -18,6 +18,8 @@ local hitIsYou = require(client:WaitForChild("hitIsYou"))
 
 local StageSystem = RECS.System:extend("StageSystem")
 
+local RESPAWN_TIME = 2/3
+
 local localPlayer = Players.LocalPlayer
 local e_RequestCharacterLoad = remote:WaitForChild("RequestCharacterLoad")
 
@@ -26,7 +28,7 @@ function StageSystem:newStage(stage, stageinstance)
     stage.stageCompleted = Signal.new()
     stage.characterDied = nil
     stage.characterAdded = localPlayer.CharacterAdded:connect(function(character)
-        print("added character")
+        print(("Character [%s] spawned"):format(character.Name))
         local humanoid = character:WaitForChild("Humanoid")
         local root = character:WaitForChild("HumanoidRootPart")
 
@@ -34,10 +36,13 @@ function StageSystem:newStage(stage, stageinstance)
         CollectionService:AddTag(character,"PlayerHitbox")
         CollectionService:AddTag(character,"CastShadow")
         CollectionService:AddTag(root,"ForceReciever")
-
+        local died = false
         -- oh noes, respawn the character!
         stage.characterDied = humanoid.Died:connect(function()
-            self:characterDied(stage)
+            if not died then
+                died = true
+                self:characterDied(stage)
+            end
         end)
     end)
 
@@ -60,11 +65,14 @@ function StageSystem:newStage(stage, stageinstance)
             local goalConnection
             goalConnection = goalinstance.Touched:connect(function(hit)
                 if hitIsYou(hit) then
-                    localPlayer.Character.Parent = nil
-                    goalConnection:Disconnect()
-                    stage.characterDied:Disconnect()
-                    stage.characterAdded:Disconnect()
-                    stage.stageCompleted:fire()
+                    local character = hit.Parent
+                    local humanoid = character:WaitForChild("Humanoid")
+                    if humanoid.Health > 0 then
+                        goalConnection:Disconnect()
+                        stage.characterDied:Disconnect()
+                        stage.characterAdded:Disconnect()
+                        stage.stageCompleted:fire()
+                    end
                 end
             end)
         end
@@ -79,14 +87,12 @@ function StageSystem:loadCharacter(stage)
     local startInstance = startToUse.instance
     local spawnPos = (startInstance.CFrame * CFrame.new(0,6,0)).p
 
+    print("Attempting to respawn...")
     e_RequestCharacterLoad:FireServer(spawnPos)
 end
 
 function StageSystem:characterDied(stage)
-    -- fire some event
-
-    wait(2/3)
-    print("loading")
+    wait(RESPAWN_TIME)
     StageSystem:loadCharacter(stage)
 end
 
