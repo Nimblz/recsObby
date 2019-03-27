@@ -54,26 +54,32 @@ function CastShadowSystem:step()
 
             if hit and dist > 4 then
 
+                -- bring shadow into the workspace
                 if shadowPart.Parent == nil then
                     shadowPart.Parent = Workspace
                 end
 
+                -- vectors we do math on to find right orientation
                 local up = Vector3.new(0,1,0)
                 local forward = Vector3.new(0,0,-1)
                 local direction = (root.CFrame.LookVector * Vector3.new(1,0,1)).Unit
 
+                -- raw cross product, if magnitude is 0 then default to global right
                 local right = up:Cross(normal)
                 local rightCross = right.Magnitude == 0 and Vector3.new(1,0,0) or right.Unit
                 local normalAngle = math.acos(up:Dot(normal))
 
-                local isForwardAngleNegative = math.sign(forward:Cross(direction).Y)
+                -- flip angle?
+                local isForwardAngleNegative = math.sign(forward:Cross(direction).Y) 
+                -- angle to match facing direction
                 local forwardAngle = math.acos(forward:Dot(direction)) * isForwardAngleNegative
 
                 shadowPart.CFrame =
                     CFrame.new(pos) *
-                    CFrame.fromAxisAngle(normal,forwardAngle) *
-                    CFrame.fromAxisAngle(rightCross, normalAngle)
+                    CFrame.fromAxisAngle(normal,forwardAngle) * -- tilt to match character facing
+                    CFrame.fromAxisAngle(rightCross, normalAngle) -- tilt to allign with surface normal
             else
+                -- hide shadow
                 if shadowPart.Parent == Workspace then
                     shadowPart.Parent = nil
                 end
