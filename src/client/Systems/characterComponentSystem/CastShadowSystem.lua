@@ -63,11 +63,11 @@ function CastShadowSystem:step()
                 local direction = (root.CFrame.LookVector * Vector3.new(1,0,1)).Unit
 
                 local right = up:Cross(normal)
+                local rightCross = right.Magnitude == 0 and Vector3.new(1,0,0) or right.Unit
                 local normalAngle = math.acos(up:Dot(normal))
 
                 local isForwardAngleNegative = math.sign(forward:Cross(direction).Y)
                 local forwardAngle = math.acos(forward:Dot(direction)) * isForwardAngleNegative
-                local rightCross = right.Magnitude == 0 and Vector3.new(1,0,0) or right.Unit
 
                 shadowPart.CFrame =
                     CFrame.new(pos) *
