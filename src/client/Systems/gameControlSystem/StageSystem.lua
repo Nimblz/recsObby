@@ -68,6 +68,7 @@ function StageSystem:newStage(stage, stageinstance)
                     local character = hit.Parent
                     local humanoid = character:WaitForChild("Humanoid")
                     if humanoid.Health > 0 then
+                        character:Destroy()
                         goalConnection:Disconnect()
                         stage.characterDied:Disconnect()
                         stage.characterAdded:Disconnect()
