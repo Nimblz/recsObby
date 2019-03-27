@@ -10,5 +10,6 @@ return RECS.defineComponent("CastShadow", function()
         castDirection = Vector3.new(0,-1,0),
         opacity = 0.5,
         fadeDepth = 64, -- when does the shadow begin to fade out
+        shadowPart = nil,
     }
 end)

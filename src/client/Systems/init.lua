@@ -14,7 +14,7 @@ local serviceDeffinitions = {
     StageSystem = require(gameControlSystem:WaitForChild("StageSystem")),
 
     PlayerHitboxSystem = require(characterComponentSystem:WaitForChild("PlayerHitboxSystem")),
-    CastShadowSystem = require(gameControlSystem:WaitForChild("CastShadowSystem")),
+    CastShadowSystem = require(characterComponentSystem:WaitForChild("CastShadowSystem")),
 
     DamageTriggerSystem = require(stageObjectSystem:WaitForChild("DamageTriggerSystem")),
     CoinTriggerSystem = require(stageObjectSystem:WaitForChild("CoinTriggerSystem")),
@@ -34,9 +34,9 @@ return {
     RECS.event(game:GetService("RunService").RenderStepped, {
         serviceDeffinitions.SpinnerSystem,
         serviceDeffinitions.CompositePositionSystem,
+        serviceDeffinitions.CastShadowSystem,
     }),
     RECS.interval(1, {
-        serviceDeffinitions.CastShadowSystem,
         serviceDeffinitions.PlayerStatsSystem,
         serviceDeffinitions.CoinTriggerSystem,
         serviceDeffinitions.DamageTriggerSystem,

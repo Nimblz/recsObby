@@ -1,4 +1,5 @@
 local SoundService = game:GetService("SoundService")
+local CollectionService = game:GetService("CollectionService")
 
 local Sound = {}
 
@@ -59,6 +60,7 @@ function Sound:playSound(deffinition,cframe)
     soundPart.CFrame = cframe
 
     soundPart.Parent = Sound.soundBin
+    CollectionService:AddTag(soundPart,"NoCollide")
 
     newSound.Parent = soundPart
 

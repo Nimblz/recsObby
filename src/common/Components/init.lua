@@ -2,6 +2,7 @@ return {
     -- character components
     -- things that modify the character
     PlayerHitbox = require(script:WaitForChild("PlayerHitbox")),
+    CastShadow = require(script:WaitForChild("CastShadow")),
 
     -- stage object components
     -- things that give the game interactivity, stage hazards, puzzle elements
